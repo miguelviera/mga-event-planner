@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+
+    <title>New Event</title>
+    <link rel="icon" type="image/ico" href="../images/favicon.ico">
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+
+    <!-- Custom styles for this template -->
+    <link href="../css/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main>
+      <h1 class="visually-hidden">Headers examples</h1>
+
+      <div class="container-fluid">
+        <header
+          class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom"
+          style="background-color: #633393"
+        >
+          <a
+            href="../index.html"
+            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+          >
+            <svg class="bi me-2" width="40" height="32">
+              <use xlink:href="#bootstrap" />
+            </svg>
+            <span class="fs-4" style="color: #fff; font-weight: bold"
+              >MGA Event Planner</span
+            >
+          </a>
+
+          <ul class="nav nav-pills" id="mynavbar">
+            <li class="nav-item">
+              <a href="event.html?id=-1" class="nav-link link_event_style"
+                >Event Request</a
+              >
+            </li>
+            <li class="nav-item">
+              <a href="event_rooms.html" class="nav-link link_event_style"
+                >Event Rooms</a
+              >
+            </li>
+          </ul>
+        </header>
+      </div>
+    </main>
+
+    <div class="container center" style="padding-bottom: 30px">
+      <h2>Event Request:</h2>
+    </div>
+    <div class="container center" style="padding-bottom: 30px">
+      <div id="error" class="form-group"></div>
+      <div id="success" class="form-group"></div>
+    </div>
+    <div class="container center" style="margin-bottom: 300px">
+      <div class="card" id="new_event_form" style="width: 50%">
+        <div class="card-header" id="form_title">Create a New Event</div>
+        <div class="card-body">
+          <div class="form-group" style="margin-bottom: 10px">
+            <label for="name">Event Name</label>
+            <input type="text" class="form-control" id="name" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 10px">
+            <label for="type">Event Type</label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              id="type"
+            >
+              <option selected>None</option>
+              <option value="Meeting">Meeting</option>
+              <option value="Seminar">Seminar</option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Reception">Reception</option>
+              <option value="Camp">Camp</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 10px">
+            <label for="type">All Campuses</label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              id="campus"
+              onchange="filterEventRooms()"
+            >
+              <option selected>None</option>
+              <option value="Macon">Macon</option>
+              <option value="Cochran">Cochran</option>
+              <option value="Dublin">Dublin</option>
+              <option value="Eastman">Eastman</option>
+              <option value="Warner Robins">Warner Robins</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 10px" id="event_rooms">
+            <label for="type">Event Room</label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              id="room"
+            >
+              <option selected>None</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 10px">
+            <label for="date">Event Date</label>
+            <input type="date" class="form-control" id="date" />
+          </div>
+          <div class="form-group" style="margin-bottom: 10px">
+            <label for="start_time">Start Time</label>
+            <input type="time" class="form-control" id="start_time" />
+          </div>
+          <div class="form-group" style="margin-bottom: 10px">
+            <label for="end_time">End Time</label>
+            <input type="time" class="form-control" id="end_time" />
+          </div>
+          <div class="form-group" style="margin-bottom: 10px">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <button
+              class="btn btn-primary mb-2"
+              onclick="createSaveEventRecord()"
+            >
+              Submit
+            </button>
+            <button class="btn btn-secondary mb-2" onclick="reset()">
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container center">
+        <span class="text-muted"
+          >© 2024 MGA Event Planner - All Rights Reserved</span
+        >
+      </div>
+    </footer>
+    <!-- Add Bootstrap JS and Popper.js scripts (optional) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- add firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
+
+    <script src="../js/firebaseConfig.js"></script>
+
+    <script src="../js/main.js"></script>
+
+    <script>
+      const new_event_form = document.getElementById("new_event_form");
+      if (loggedIn != "true") {
+        document.getElementById(
+          "success"
+        ).innerHTML = `<div class="alert alert-danger" role="alert">
+                                                          Please click the Register tab to get started
+                                                        </div>`;
+        new_event_form.style.display = "none";
+      }
+      const reset = () => {
+        location.href = "event.html";
+      };
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const event_id = urlParams.get("id");
+
+      // load event rooms
+      const loadEventRooms = async (event_room, campus) => {
+        const eventRoom = document.querySelector("#room");
+        const roomList = await loadAllItems("event_rooms");
+        let listEvents = [];
+        for (const key in roomList) {
+          var value = roomList[key];
+          const newOption = document.createElement("option");
+          newOption.value = value.name;
+          newOption.id = value.campus + key;
+          if (event_id == "-1" || (value.campus != campus && campus)) {
+            newOption.style.display = "none";
+          }
+          newOption.innerHTML = value.name;
+          eventRoom.appendChild(newOption);
+        }
+        if (event_room) eventRoom.value = event_room;
+      };
+
+      const loadRecord = async (event_id) => {
+        const event_record = await loadItemByKey("events", event_id);
+        if (!event_record) {
+          document.getElementById(
+            "error"
+          ).innerHTML = `<div class="alert alert-danger" role="alert">
+                              This record doesn't exist!
+                          </div>`;
+        }
+
+        console.log(event_record);
+        document.getElementById("name").value = event_record.name;
+        document.getElementById("type").value = event_record.type;
+        document.getElementById("campus").value = event_record.campus;
+        document.getElementById("room").value = event_record.room;
+        document.getElementById("date").value = event_record.date;
+        document.getElementById("start_time").value = event_record.start_time;
+        document.getElementById("end_time").value = event_record.end_time;
+        document.getElementById("description").value = event_record.description;
+        filterEventRooms();
+      };
+
+      loadEventRooms();
+
+      if (event_id != -1) {
+        document.getElementById("form_title").innerHTML = "Update Event";
+        loadRecord(event_id);
+      }
+
+      const createSaveEventRecord = async () => {
+        let success_message = document.getElementById("success");
+        let name = document.getElementById("name").value;
+        let type = document.getElementById("type").value;
+        let campus = document.getElementById("campus").value;
+        let room = document.getElementById("room").value;
+        let date = document.getElementById("date").value;
+        let start_time = document.getElementById("start_time").value;
+        let end_time = document.getElementById("end_time").value;
+        let description = document.getElementById("description").value;
+
+        const organizer_email = localStorage.getItem("email");
+        const organizer_name = localStorage.getItem("name");
+        let error = document.getElementById("error");
+        if (event_id != "-1") {
+          try {
+            let response = await updateItemAsync("events", event_id, {
+              name,
+              type,
+              campus,
+              room,
+              date,
+              start_time,
+              end_time,
+              description,
+              organizer_email,
+              organizer_name,
+            });
+
+            success_message.innerHTML = `<div class="alert alert-success" role="alert">
+                                Event updated!
+                              </div>`;
+            return;
+          } catch (e) {
+            error.innerHTML = `<div class="alert alert-danger" role="alert">
+                              There was a server issue!
+                            </div>`;
+          }
+        } else {
+          try {
+            await createRecord("events/", {
+              name,
+              type,
+              campus,
+              room,
+              date,
+              start_time,
+              end_time,
+              description,
+              organizer_name,
+              organizer_email,
+            });
+            success_message.innerHTML = `<div class="alert alert-success" role="alert">
+                                Event created!
+                              </div>`;
+            location.href = "my_events.html";
+          } catch (e) {
+            error.innerHTML = `<div class="alert alert-danger" role="alert">
+                              There was a server issue!
+                            </div>`;
+          }
+        }
+      };
+
+      function filterEventRooms() {
+        const campus = document.getElementById("campus").value;
+        const event_rooms = document.getElementById("event_rooms");
+        let rooms = document.getElementById("room");
+        let options = rooms.options;
+        for (let i = 0; i < options.length; i++) {
+          let option = options[i];
+          option.style.display = option.id.startsWith(campus) ? "" : "none";
+        }
+      }
+    </script>
+  </body>
+</html>
